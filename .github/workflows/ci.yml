@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v3
+        with:
+          version: 8
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile=false
+      - name: Run TypeScript tests
+        run: pnpm -r test
+      - name: Lint TypeScript packages
+        run: pnpm -r lint
+      - name: Python tests
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e services/api[dev]
+          pytest services/api
