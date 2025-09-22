@@ -1,0 +1,30 @@
+{
+  "name": "@protoweaver/cli",
+  "version": "0.1.0",
+  "type": "module",
+  "bin": {
+    "protoweaver": "dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsup src/cli.ts --format esm --dts --out-extension esm=.js",
+    "dev": "tsup src/cli.ts --watch --format esm --out-extension esm=.js",
+    "lint": "eslint 'src/**/*.{ts,tsx}'",
+    "test": "vitest run",
+    "format": "prettier --write 'src/**/*.{ts,tsx,json}'"
+  },
+  "dependencies": {
+    "@protoweaver/ui-ir": "workspace:^",
+    "commander": "^11.1.0",
+    "undici": "^5.28.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.12.7",
+    "eslint": "^8.57.0",
+    "@typescript-eslint/eslint-plugin": "^6.21.0",
+    "@typescript-eslint/parser": "^6.21.0",
+    "prettier": "^3.2.5",
+    "tsup": "^8.0.1",
+    "typescript": "^5.4.3",
+    "vitest": "^1.4.0"
+  }
+}

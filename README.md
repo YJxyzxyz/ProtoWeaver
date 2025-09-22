@@ -1,88 +1,86 @@
 # 🎨 ProtoWeaver — 从手绘+语音到可运行 Web 原型
 
-[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
-[![Build](https://github.com/yourname/protoweaver/actions/workflows/ci.yml/badge.svg)](https://github.com/yourname/protoweaver)
+[![License](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE.txt)
 
-> 🖌️ 一个多模态编程助手：输入手绘草图 + 语音描述，输出完整可运行的 React Web 原型。
+> 🖌️ 多模态编程助手：输入手绘草图 + 语音描述，输出完整可运行的 React / Next.js 原型，并支持可编辑预览与对话式迭代。
 
 ---
 
-## ✨ 特性
-- 📷 **草图解析**：从手绘图中识别按钮、输入框、表格等 UI 组件  
-- 🎙️ **语音意图**：语音描述转属性、样式、交互逻辑  
-- 🔗 **中间表示 (UI-IR)**：统一的 JSON Schema，支持多模态融合  
-- ⚛️ **代码生成**：自动生成 React + Tailwind/Material UI 页面  
-- 🔄 **对话式迭代**：自然语言修改 → IR Patch → 代码热更新  
-- 🧪 **可运行性保障**：TypeScript、ESLint、AST Patch 确保输出可用  
+## ✨ 核心特性
+
+- 📷 **草图解析**：示例 CV pipeline，将草图转换为布局树与组件集合。
+- 🎙️ **语音理解**：内置 ASR/NLU 模拟器，抽取文案、主题、交互意图。
+- 🔗 **UI-IR 中间表示**：`packages/ui-ir` 提供 Schema、Patch、示例数据，串联多端。
+- ⚛️ **代码生成**：`services/codegen` 映射 UI-IR → Next.js + Tailwind 代码包。
+- 🧪 **FastAPI 服务**：`services/api` 集成多模态流程、可运行性检查、对话式迭代。
+- 🖥️ **Studio 前端**：`apps/studio` 支持上传、预览 UI-IR、查看代码与自然语言微调。
+- 🔄 **预览器**：`apps/preview` 在浏览器中实时渲染 UI-IR。
 
 ---
 
 ## 🚀 快速开始
-```bash
-# 克隆项目
-git clone https://github.com/yourname/protoweaver.git
-cd protoweaver
 
+```bash
 # 安装依赖
 pnpm install
 
 # 启动后端 (FastAPI)
-make dev-api
+uvicorn services.api.app.main:app --reload
 
-# 启动推理 worker
-make dev-worker
-
-# 启动前端 IDE
+# 启动前端工作台
 pnpm -C apps/studio dev
+
+# 可选：启动预览器 (Vite)
+pnpm -C apps/preview dev
 ```
 
-然后打开 [http://localhost:3000](http://localhost:3000/) 即可上传草图和语音，生成原型！
+访问 [http://localhost:3000](http://localhost:3000/) 上传草图与语音。预览器默认读取 `localStorage` 中的 `protoweaver-ui-ir`。
 
-------
+---
 
 ## 📂 仓库结构
 
 ```
 protoweaver/
-├─ apps/              # 前端 IDE + 预览
-│  ├─ studio/         
-│  └─ preview/        
-├─ services/          # 后端服务
-│  ├─ api/            
-│  ├─ worker/         
-│  └─ codegen/        
-├─ models/            # 模型相关
-├─ packages/          
-│  ├─ ui-ir/          # UI-IR Schema
+├─ apps/
+│  ├─ studio/         # Next.js 工作台
+│  └─ preview/        # Vite 预览器
+├─ packages/
+│  ├─ ui-ir/          # UI-IR Schema + 工具
 │  └─ cli/            # 命令行工具
-├─ data/              # 示例数据 & 合成工具
-├─ docs/              # 技术文档
-└─ .github/workflows/ # CI/CD
+├─ services/
+│  ├─ api/            # FastAPI 服务
+│  ├─ worker/         # 推理 Worker 示例
+│  └─ codegen/        # TypeScript 代码生成库
+├─ docs/              # 架构 / 流程文档
+├─ data/              # 示例数据占位
+└─ scripts/           # 自动化脚本（预留）
 ```
 
-------
+---
 
-## 🛠️ 路线图
+## 🧪 测试
 
--  UI-IR Schema
--  最小 React 渲染器
--  组件检测器 (10 类核心 UI)
--  ASR + 指令解析
--  IR Patch 增量修改
--  在线 Demo
+- TypeScript 包：`pnpm -r test`
+- Python API：`pytest`（位于 `services/api`）
 
-------
+---
 
-## 🤝 如何贡献
+## 🛣️ 路线图
 
-我们欢迎各种形式的贡献：
+- [ ] 集成真实的组件检测模型（Segment Anything / DETR）
+- [ ] 支持更多组件库（Radix UI, Ant Design, Chakra）
+- [ ] 引入 AST 级代码修复与 LLM 智能补全
+- [ ] 对话式编辑的语义 Diff 与冲突解决
+- [ ] SaaS 部署与团队协同
 
-- 新增 UI 组件检测类别
-- 改进 NLU 指令解析
-- 增强代码生成模板
-- 撰写文档 & 教程
+---
 
-------
+## 🤝 参与贡献
+
+欢迎提交 Issue / PR，或通过 Discussions 交流想法。
+
+---
 
 ## 📜 License
 

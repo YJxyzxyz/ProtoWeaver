@@ -1,0 +1,1 @@
+"""ProtoWeaver FastAPI application package."""
